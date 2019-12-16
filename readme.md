@@ -25,6 +25,8 @@ find_initiation_areas_vpdm in initiation_ares.py
 ## Repo Directory
 * **forestpy:** Tool for training random forest models with varying parameters, 
 and ranking them by how closely they match the original model. 
+* **notebooks:** Jupyter-notebooks
+* **notes:** notes on meeting and other things
 * **presentations:** presentations given on project.
 * **research:** notes on research.
 * **scripts:** scripts used that are not part of any particular tool 
