@@ -1,9 +1,9 @@
 name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,abs diff var,median,mode
 rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp25.yml,complete,10,12,AUTO,1000,1,2,25,finwhale,0:05:25.596253,0:00:05.575454,-0.003495027038055967,4.320070571953044,33.34090793683151,14.677910405390866,0.22198707512188887,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp50.yml,complete,10,12,AUTO,1000,1,2,50,finwhale,0:11:40.951451,0:00:05.689266,0.0006002943614165206,4.3769802911827735,34.388889850609495,15.23093374156044,0.2239797203735605,
+rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp50.yml,complete,10,12,AUTO,1000,1,2,50,finwhale,0:11:40.951451,0:00:05.689266,0.0006002943614165206,4.3769802911827735,34.38888985060949,15.23093374156044,0.2239797203735605,
 rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp75.yml,in progress ocotal,10,12,AUTO,1000,1,2,75,,,,,,,,,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss5_tdp25.yml,in progress finwhale,10,12,AUTO,1000,1,5,25,,,,,,,,,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss5_tdp50.yml,not run,10,12,AUTO,1000,1,5,50,,,,,,,,,
+rfm_e10_md12_mfAUTO_mln1000_msl1_mss5_tdp25.yml,complete,10,12,AUTO,1000,1,5,25,finwhale,0:05:33.492005,0:00:05.675973,-0.0034950270380560214,4.320070571953044,33.34090793683151,14.67791040539086,0.22198707512188887,
+rfm_e10_md12_mfAUTO_mln1000_msl1_mss5_tdp50.yml,in progress finwhale,10,12,AUTO,1000,1,5,50,,,,,,,,,
 rfm_e10_md12_mfAUTO_mln1000_msl1_mss5_tdp75.yml,not run,10,12,AUTO,1000,1,5,75,,,,,,,,,
 rfm_e10_md12_mfAUTO_mln1000_msl1_mss10_tdp25.yml,not run,10,12,AUTO,1000,1,10,25,,,,,,,,,
 rfm_e10_md12_mfAUTO_mln1000_msl1_mss10_tdp50.yml,not run,10,12,AUTO,1000,1,10,50,,,,,,,,,
