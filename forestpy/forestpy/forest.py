@@ -95,9 +95,13 @@ class RFParams (dict):
     def settings_from_save_name(self, name):
         settings = name.split('_')
         # print(settings)
-        for s in settings[2:-1]:
+        for s in settings[1:-1]:
             # print(s)
             if 'tdp' == s[:3]:
+                continue
+            if 'e' == s[0]:
+                 
+                self['estimators'] = int(s[1:])
                 continue
             for s_len in range(1,5)[::-1]:
                 if (s[:s_len]) in self.name_substitutions:
@@ -285,9 +289,9 @@ def evaluate_model(model, full_inputs, original_results):
     ev = {}
     ev['predict time'] = str(total)
     ev['diff mean'] = np.nanmean(diff)
-    ev['diff ar'] = np.nanvar(diff)
+    ev['diff var'] = np.nanvar(diff)
     ev['abs diff mean'] = np.abs(ev['diff mean'])
-    ev['mode'] = diff.mode()
+    ev['mode'] = ''
     ev['median'] = np.nanmedian(diff)
      
     return ev
@@ -362,6 +366,7 @@ def run_brute_force(computer, progress_file, ss_data_sets):
         )
         update['computer'] = computer
         update['train time'] = str(total)
+        update['name'] = _next
         del(model)
         ## update is at top
  

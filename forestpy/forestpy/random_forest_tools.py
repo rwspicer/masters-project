@@ -9,6 +9,7 @@ forest models
 
 """
 import numpy as np
+import matplotlib.pyplot as plt
 
 def get_as_ml_features(self, mask = None, train_range = None):
     """TemporalMultiGrid version of get_as_ml_features,
