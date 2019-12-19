@@ -1,4 +1,4 @@
-﻿name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,median,mode
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp25.yml,not run,10,12,AUTO,1000,1,2,25,,,,,,,,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp50.yml,not run,10,12,AUTO,1000,1,2,50,,,,,,,,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp75.yml,not run,10,12,AUTO,1000,1,2,75,,,,,,,,
+name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,median,mode
+rfm_e4_md12_mfAUTO_mln100_msl1_mss2_tdp25.yml,not run,4,12,AUTO,100,1,2,25,,,,,,,,
+rfm_e4_md12_mfAUTO_mln100_msl1_mss2_tdp50.yml,not run,4,12,AUTO,100,1,2,50,,,,,,,,
+rfm_e4_md12_mfAUTO_mln100_msl1_mss2_tdp75.yml,not run,4,12,AUTO,100,1,2,75,,,,,,,,
