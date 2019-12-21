@@ -7287,4 +7287,3 @@ rfm_e150_md100_mfLOG2_mln50000_msl8_mss2_tdp75.yml,not run,150.0,100.0,LOG2,5000
 rfm_e150_md100_mfLOG2_mln50000_msl8_mss5_tdp25.yml,not run,150.0,100.0,LOG2,50000.0,8.0,5.0,25.0,,,,,,,,,
 rfm_e150_md100_mfLOG2_mln50000_msl8_mss5_tdp50.yml,not run,150.0,100.0,LOG2,50000.0,8.0,5.0,50.0,,,,,,,,,
 rfm_e150_md100_mfLOG2_mln50000_msl8_mss5_tdp75.yml,not run,150.0,100.0,LOG2,50000.0,8.0,5.0,75.0,,,,,,,,,
-rfm_e150_md100_mfLOG2_mln50000_msl8_mss10_tdp25.yml,not run,150.0,100.0,LOG2,50000.0,8.0,10.0,25.0,,,,,,,,,
