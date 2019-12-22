@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 import numpy as np
 
 import rank_models as rank
+import log_cleanup
 
 class RFParams (dict):
     """
@@ -261,6 +262,7 @@ def brute_force_git_check_in(update, progress_file, computer):
         _next = None
     progress_frame.to_csv(progress_file)
 
+    log_cleanup.cleanup_no_git(progress_file)
 
     rsp = os.popen('git add ' + progress_file).read()
 
