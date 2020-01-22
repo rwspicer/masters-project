@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 import numpy as np
 
 import rank_models as rank
+import log_cleanup
 
 class RFParams (dict):
     """
@@ -243,6 +244,7 @@ def brute_force_git_check_in(update, progress_file, computer):
         progress_frame['diff mean'][update['name']] = update['diff mean']
         progress_frame['abs diff mean'][update['name']] = update['abs diff mean']
         progress_frame['diff var'][update['name']] = update['diff var']
+        progress_frame['abs diff var'][update['name']] = update['abs diff var']
         progress_frame['median'][update['name']] = update['median']
         progress_frame['mode'][update['name']] = update['mode']
         # progress_frame['mode'][update['name']] = update['mode']
@@ -260,6 +262,7 @@ def brute_force_git_check_in(update, progress_file, computer):
         _next = None
     progress_frame.to_csv(progress_file)
 
+    log_cleanup.cleanup_no_git(progress_file)
 
     rsp = os.popen('git add ' + progress_file).read()
 
@@ -285,12 +288,17 @@ def evaluate_model(model, full_inputs, original_results):
     model_predict = model.predict(full_inputs.T)
     total = datetime.now() - start
     print ('Evaluating predictions')
+
+    
     diff = rank.find_diff(original_results, model_predict)
+    
     ev = {}
+    ev['prediction diff'] = diff
     ev['predict time'] = str(total)
     ev['diff mean'] = np.nanmean(diff)
     ev['diff var'] = np.nanvar(diff)
-    ev['abs diff mean'] = np.abs(ev['diff mean'])
+    ev['abs diff var'] = np.nanvar(np.abs(diff))
+    ev['abs diff mean'] = np.abs(diff).mean()
     ev['mode'] = ''
     ev['median'] = np.nanmedian(diff)
      
