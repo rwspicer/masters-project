@@ -1,4 +1,4 @@
-﻿name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,median,mode
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp25.yml,not run,10,12,AUTO,1000,1,2,25,,,,,,,,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp50.yml,not run,10,12,AUTO,1000,1,2,50,,,,,,,,
-rfm_e10_md12_mfAUTO_mln1000_msl1_mss2_tdp75.yml,not run,10,12,AUTO,1000,1,2,75,,,,,,,,
+name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,median,mode
+rfm_e4_md12_mfAUTO_mln100_msl1_mss2_tdp25.yml,complete,4,12,AUTO,100,1,2,25,mac,0:01:42.090195,0:00:04.758253,0.0021020998026813273,0.0021020998026813273,66.1604131345264,0.4571196510098443,
+rfm_e4_md12_mfAUTO_mln100_msl1_mss2_tdp50.yml,complete,4,12,AUTO,100,1,2,50,mac,0:03:26.389401,0:00:04.467638,-0.0017823289479833586,0.0017823289479833586,66.32083567240109,0.40253942536897735,
+rfm_e4_md12_mfAUTO_mln100_msl1_mss2_tdp75.yml,complete,4,12,AUTO,100,1,2,75,mac,0:05:29.793998,0:00:09.001254,0.001206109471623222,0.001206109471623222,67.49671940734284,0.4353619197913605,

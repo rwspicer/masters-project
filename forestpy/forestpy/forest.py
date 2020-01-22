@@ -8,11 +8,16 @@ import copy
 import os
 from pandas import read_csv
 
+import time
+
 from multigrids import TemporalMultiGrid, TemporalGrid
 
 from datetime import datetime, timedelta
 
+import numpy as np
+
 import rank_models as rank
+import log_cleanup
 
 class RFParams (dict):
     """
@@ -91,9 +96,13 @@ class RFParams (dict):
     def settings_from_save_name(self, name):
         settings = name.split('_')
         # print(settings)
-        for s in settings[2:-1]:
+        for s in settings[1:-1]:
             # print(s)
             if 'tdp' == s[:3]:
+                continue
+            if 'e' == s[0]:
+                 
+                self['estimators'] = int(s[1:])
                 continue
             for s_len in range(1,5)[::-1]:
                 if (s[:s_len]) in self.name_substitutions:
@@ -167,8 +176,8 @@ def create_model(features, labels, parameters, verbose=1, n_jobs=4):
         n_jobs=n_jobs, 
         )
 
-    print('max features', rf.max_features)
-    print('max leaf nodes', rf.max_leaf_nodes)
+    # print('max features', rf.max_features)
+    # print('max leaf nodes', rf.max_leaf_nodes)
 
     rf.fit(features.T, labels)
     return rf
@@ -192,9 +201,9 @@ def format_data(features, labels):
 
 
 
-def setup(feature_file, label_file, ss_percent=.5):
-    feature_grid = TemporalMultiGrid(feature_file)
-    label_grid = TemporalGrid(label_file)
+def setup(feature_grid, label_grid, ss_percent=.5):
+    # feature_grid = TemporalMultiGrid(feature_file)
+    # label_grid = TemporalGrid(label_file)
 
     features, labels = format_data(feature_grid, label_grid)
 
@@ -204,55 +213,171 @@ def setup(feature_file, label_file, ss_percent=.5):
         features, labels, idx = ss_idx
     )
 
-    feature_grid.config['subsample_index'] = ss_idx
-    label_grid.config['subsample_index'] = ss_idx
+    # feature_grid.config['subsample_index'] = ss_idx
+    # label_grid.config['subsample_index'] = ss_idx
 
 
     return ss_features, ss_labels, ss_idx
     
 def brute_force_task(ss_features, ss_labels, name):
-    
     current_parameters = RFParams(name)
 
     model = create_model(ss_features, ss_labels, current_parameters,
-                verbose=verbose, n_jobs=n_jobs)
+                verbose=2, n_jobs=4)
 
-def brute_force_task_git_check_in(update, progress_file):
+    # model.fit(ss_features.T, ss_labels)
 
+    return model
 
+def brute_force_git_check_in(update, progress_file, computer):
     
+    print ('Git check-in')
 
     rsp = os.popen('git pull').read()
 
     progress_frame = read_csv(progress_file, index_col=0)
-    
-    computer,train time,predict time,diff mean,abs diff mean,diff var,median,mode
-    progress_frame['computer'][update['name']] = update['commuter']
-    progress_frame['train time'][update['name']] = update['train time']
-    progress_frame['predict time'][update['name']] = update['predict time']
-    progress_frame['diff mean'][update['name']] = update['diff mean']
-    progress_frame['abs diff mean'][update['name']] = update['abs diff mean']
-    progress_frame['diff var'][update['name']] = update['diff var']
-    progress_frame['median'][update['name']] = update['median']
-    progress_frame['mode'][update['name']] = update['mode']
-    progress_frame['mode'][update['name']] = update['mode']
-    progress_frame['status'][update['name']] = 'complete'
+    if not update is None:
+        # computer,train time,predict time,diff mean,abs diff mean,diff var,median,mode
+        progress_frame['computer'][update['name']] = update['computer']
+        progress_frame['train time'][update['name']] = update['train time']
+        progress_frame['predict time'][update['name']] = update['predict time']
+        progress_frame['diff mean'][update['name']] = update['diff mean']
+        progress_frame['abs diff mean'][update['name']] = update['abs diff mean']
+        progress_frame['diff var'][update['name']] = update['diff var']
+        progress_frame['abs diff var'][update['name']] = update['abs diff var']
+        progress_frame['median'][update['name']] = update['median']
+        progress_frame['mode'][update['name']] = update['mode']
+        # progress_frame['mode'][update['name']] = update['mode']
+        progress_frame['status'][update['name']] = 'complete'
 
-    _next = progress_frame[\
+    try:
+        # print(progress_frame)
+        _next = list(progress_frame[\
         progress_frame['status'] == 'not run'
-    ]['status'].index[0]
-    progress_frame['status'][_next] = 'in progress ' + update['commuter']
+        ]['status'].index)[0]
+        print (_next)
+
+        progress_frame['status'][_next] = 'in progress ' +  computer
+    except  IndexError:
+        _next = None
+    progress_frame.to_csv(progress_file)
+
+    log_cleanup.cleanup_no_git(progress_file)
 
     rsp = os.popen('git add ' + progress_file).read()
-    rsp = os.popen(
-        'git commit -m "Results for' + update['name'] + str(datetime.now()) +'"'
-    ).read()
+
+    if not update is None:
+        rsp = os.popen(
+            'git commit -m "Results for ' + update['name'] + str(datetime.now()) +'"'
+        ).read()
+    else:
+        rsp = os.popen(
+            'git commit -m "Starting ' + _next + ' ' + str(datetime.now()) +'"'
+        ).read()
 
     rsp = os.popen('git pull').read()
 
     rsp = os.popen('git push').read()
 
-def run_brute_force()
+    return _next
+
+def evaluate_model(model, full_inputs, original_results):
+
+    print ('generating predictions')
+    start = datetime.now()
+    model_predict = model.predict(full_inputs.T)
+    total = datetime.now() - start
+    print ('Evaluating predictions')
+
+    
+    diff = rank.find_diff(original_results, model_predict)
+    
+    ev = {}
+    ev['prediction diff'] = diff
+    ev['predict time'] = str(total)
+    ev['diff mean'] = np.nanmean(diff)
+    ev['diff var'] = np.nanvar(diff)
+    ev['abs diff var'] = np.nanvar(np.abs(diff))
+    ev['abs diff mean'] = np.abs(diff).mean()
+    ev['mode'] = ''
+    ev['median'] = np.nanmedian(diff)
+     
+    return ev
+
+def setup_brute_force(feature_file, label_file):
+    """Function includes some ugly hard coding
+    """
+    print('Loading data.')
+    feature_grid = TemporalMultiGrid(feature_file)
+    label_grid = TemporalGrid(label_file)
+
+    ss_data_sets = {}
+    print('Creating 25% subsample.')
+    ss_features, ss_labels, ss_idx = setup(feature_grid,label_grid, .25)
+    ss_data_sets['tdp25'] = {
+        'features' : ss_features,
+        'labels': ss_labels,
+        'idx': ss_idx
+    }
+    print('Creating 50% subsample.')
+    ss_features, ss_labels, ss_idx = setup(feature_grid,label_grid, .5)
+    ss_data_sets['tdp50'] = {
+        'features' : ss_features,
+        'labels': ss_labels,
+        'idx': ss_idx
+    }
+    print('Creating 75% subsample.')
+    ss_features, ss_labels, ss_idx = setup(feature_grid,label_grid, .75)
+    ss_data_sets['tdp75'] = {
+        'features' : ss_features,
+        'labels': ss_labels,
+        'idx': ss_idx
+    }
+    print('Formating full data.')
+    tf_array, tl_array = format_data(feature_grid, label_grid)
+    ss_data_sets['full'] = {
+        'features': tf_array,
+        'labels': tl_array,
+        'idx': 'N/A'
+    }
+    return ss_data_sets
+
+
+
+def run_brute_force(computer, progress_file, ss_data_sets):
+    update = None
+    while True:
+        print ('\n\n')
+        print ('-' * 80)
+        _next = brute_force_git_check_in(update, progress_file, computer)
+        if _next == None:
+            print("All current runs completed sleeping for 1 hour.")
+            time.sleep(60 * 60)
+            continue
+        print("Generating random forest for ", _next + '.')
+
+        tpd = _next[-9:-4]
+
+        start = datetime.now()
+        model = brute_force_task(
+            ss_data_sets[tpd]['features'], 
+            ss_data_sets[tpd]['labels'], 
+            _next
+        )
+        total = datetime.now() - start
+
+        print("Testing random forest for ", _next + '.')
+        update = evaluate_model(
+            model, 
+            ss_data_sets['full']['features'], 
+            ss_data_sets['full']['labels']
+        )
+        update['computer'] = computer
+        update['train time'] = str(total)
+        update['name'] = _next
+        del(model)
+        ## update is at top
+ 
 
 def run(
         ss_features, ss_labels, base_parameters, vary_parameters, 
