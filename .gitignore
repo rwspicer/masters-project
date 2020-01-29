@@ -1,2 +1,4 @@
 .DS_Store
 *.pdf
+*__pycache__*
+.ipynb_checkpoints
