@@ -58,3 +58,19 @@ def show_feature_importances(model, feature_list, show=False):
         
     feature_importances = {f[0]:f[1] for f in feature_importances} 
     return feature_importances
+
+hp_lookup = {
+    'e': "number estimators", 
+    'md': "max depth", 
+    'mf': "max features", 
+    'mln': "max leaf nodes", 
+    'msl': "min samples leaf", 
+    'mss': "min samples split", 
+    'tdp' : "training data percent", 
+    'computer': "computer"
+}
+
+
+import copy
+for key, value in copy.copy(hp_lookup).items():
+    hp_lookup[value] = key
