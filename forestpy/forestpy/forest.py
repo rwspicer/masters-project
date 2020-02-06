@@ -249,7 +249,7 @@ def brute_force_git_check_in(update, progress_file, computer):
         progress_frame['mode'][update['name']] = update['mode']
         # progress_frame['mode'][update['name']] = update['mode']
         progress_frame['status'][update['name']] = 'complete'
-        progress_frame['r^2'] = update['r^2']
+        progress_frame['r^2'][update['name']] = update['r^2']
 
     try:
         # print(progress_frame)
