@@ -249,6 +249,7 @@ def brute_force_git_check_in(update, progress_file, computer):
         progress_frame['mode'][update['name']] = update['mode']
         # progress_frame['mode'][update['name']] = update['mode']
         progress_frame['status'][update['name']] = 'complete'
+        progress_frame['r^2'] = update['r^2']
 
     try:
         # print(progress_frame)
@@ -301,6 +302,7 @@ def evaluate_model(model, full_inputs, original_results):
     ev['abs diff mean'] = np.abs(diff).mean()
     ev['mode'] = ''
     ev['median'] = np.nanmedian(diff)
+    ev['r^2'] = model.score(full_inputs.T, model_predict)
      
     return ev
 
