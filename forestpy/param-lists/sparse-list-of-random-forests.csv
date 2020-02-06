@@ -1,11 +1,11 @@
 name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,abs diff var,median,mode,training time (hours),r^2
 rfm_e50_md60_mfAUTO_mln50000_msl8_mss5_tdp25.yml,complete,50.0,60.0,AUTO,50000.0,8.0,5.0,25.0,finwhale,0:22:39.201855,0:00:28.638633,-0.002467203712161969,1.1599599982693038,3.122289332981256,1.7767882224904925,0.008771190712061783,,,1.0
 rfm_e50_md100_mfAUTO_mln50000_msl2_mss5_tdp75.yml,in progress ocotal,50.0,100.0,AUTO,50000.0,2.0,5.0,75.0,,,,,,,,,,,
-rfm_e50_md25_mfAUTO_mln50000_msl8_mss5_tdp25.yml,complete,50.0,25.0,AUTO,50000.0,8.0,5.0,25.0,bristlecone,0:20:58.188490,0:00:27.424344,-0.0022086493610030448,1.1863802897084097,3.2985711910029325,1.8910778773263117,0.011954720718838184,,,1.0
+rfm_e50_md25_mfAUTO_mln50000_msl8_mss5_tdp25.yml,complete,50.0,25.0,AUTO,50000.0,8.0,5.0,25.0,bristlecone,0:20:58.188490,0:00:27.424344,-0.0022086493610030448,1.1863802897084097,3.2985711910029325,1.891077877326312,0.011954720718838184,,,1.0
 rfm_e100_md25_mfAUTO_mln50000_msl4_mss5_tdp75.yml,in progress bristlecone,100.0,25.0,AUTO,50000.0,4.0,5.0,75.0,,,,,,,,,,,
 rfm_e10_md100_mfAUTO_mln50000_msl8_mss5_tdp25.yml,complete,10.0,100.0,AUTO,50000.0,8.0,5.0,25.0,finwhale,0:05:29.274097,0:00:07.388219,-0.002534211340920826,1.2186885207746554,3.503523401428493,2.0183281129876978,0.00920707676844279,,,1.0
-rfm_e50_md25_mfAUTO_mln50000_msl2_mss2_tdp75.yml,in progress finwhale,50.0,25.0,AUTO,50000.0,2.0,2.0,75.0,,,,,,,,,,,
-rfm_e10_md25_mfAUTO_mln50000_msl8_mss2_tdp75.yml,not run,10.0,25.0,AUTO,50000.0,8.0,2.0,75.0,,,,,,,,,,,
+rfm_e50_md25_mfAUTO_mln50000_msl2_mss2_tdp75.yml,complete,50.0,25.0,AUTO,50000.0,2.0,2.0,75.0,finwhale,1:18:47.061569,0:00:28.635623,-0.001139450905492018,1.2000604627029157,3.192624277106292,1.7524804613119074,0.01088144625302312,,,1.0
+rfm_e10_md25_mfAUTO_mln50000_msl8_mss2_tdp75.yml,in progress finwhale,10.0,25.0,AUTO,50000.0,8.0,2.0,75.0,,,,,,,,,,,
 rfm_e50_md60_mfLOG2_mln50000_msl4_mss5_tdp50.yml,not run,50.0,60.0,LOG2,50000.0,4.0,5.0,50.0,,,,,,,,,,,
 rfm_e50_md100_mfLOG2_mln50000_msl2_mss10_tdp75.yml,not run,50.0,100.0,LOG2,50000.0,2.0,10.0,75.0,,,,,,,,,,,
 rfm_e50_md60_mfSQRT_mln50000_msl1_mss2_tdp25.yml,not run,50.0,60.0,SQRT,50000.0,1.0,2.0,25.0,,,,,,,,,,,
