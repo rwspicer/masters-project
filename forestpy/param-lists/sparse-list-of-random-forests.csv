@@ -1,7 +1,8 @@
 name,status,e,md,mf,mln,msl,mss,tdp,computer,train time,predict time,diff mean,abs diff mean,diff var,abs diff var,median,mode,training time (hours),r^2
-rfm_e50_md60_mfAUTO_mln50000_msl8_mss5_tdp25.yml,not run,50.0,60.0,AUTO,50000.0,8.0,5.0,25.0,,,,,,,,,,,
-rfm_e50_md100_mfAUTO_mln50000_msl2_mss5_tdp75.yml,not run,50.0,100.0,AUTO,50000.0,2.0,5.0,75.0,,,,,,,,,,,
-rfm_e50_md25_mfAUTO_mln50000_msl8_mss5_tdp25.yml,not run,50.0,25.0,AUTO,50000.0,8.0,5.0,25.0,,,,,,,,,,,
+rfm_e50_md60_mfAUTO_mln50000_msl8_mss5_tdp25.yml,in progress ocotal,50.0,60.0,AUTO,50000.0,8.0,5.0,25.0,,,,,,,,,,,
+rfm_e50_md60_mfAUTO_mln50000_msl8_mss5_tdp25.yml,in progress finwhale,50.0,60.0,AUTO,50000.0,8.0,5.0,25.0,,,,,,,,,,,
+rfm_e50_md100_mfAUTO_mln50000_msl2_mss5_tdp75.yml,in progress ocotal,50.0,100.0,AUTO,50000.0,2.0,5.0,75.0,,,,,,,,,,,
+rfm_e50_md25_mfAUTO_mln50000_msl8_mss5_tdp25.yml,in progress ocotal,50.0,25.0,AUTO,50000.0,8.0,5.0,25.0,,,,,,,,,,,
 rfm_e100_md25_mfAUTO_mln50000_msl4_mss5_tdp75.yml,not run,100.0,25.0,AUTO,50000.0,4.0,5.0,75.0,,,,,,,,,,,
 rfm_e10_md100_mfAUTO_mln50000_msl8_mss5_tdp25.yml,not run,10.0,100.0,AUTO,50000.0,8.0,5.0,25.0,,,,,,,,,,,
 rfm_e50_md25_mfAUTO_mln50000_msl2_mss2_tdp75.yml,not run,50.0,25.0,AUTO,50000.0,2.0,2.0,75.0,,,,,,,,,,,
