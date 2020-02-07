@@ -302,7 +302,10 @@ def evaluate_model(model, full_inputs, original_results):
     ev['abs diff mean'] = np.abs(diff).mean()
     ev['mode'] = ''
     ev['median'] = np.nanmedian(diff)
-    ev['r^2'] = model.score(full_inputs.T, model_predict)
+
+    # r2 = model.score(full_inputs.T, model_predict)
+    # print('r2', r2)
+    # ev['r^2'] = r2 #model.score(full_inputs.T, model_predict)
      
     return ev
 
@@ -374,10 +377,12 @@ def run_brute_force(computer, progress_file, ss_data_sets, n_jobs=4):
             ss_data_sets['full']['features'], 
             ss_data_sets['full']['labels']
         )
+        update['r^2'] = model.score (ss_data_sets['full']['features'].T, ss_data_sets['full']['labels'])
         update['computer'] = computer
         update['train time'] = str(total)
         update['name'] = _next
-        del(model)
+#        return model, update
+        del (model)
         ## update is at top
  
 
