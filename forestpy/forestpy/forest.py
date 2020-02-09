@@ -219,11 +219,11 @@ def setup(feature_grid, label_grid, ss_percent=.5):
 
     return ss_features, ss_labels, ss_idx
     
-def brute_force_task(ss_features, ss_labels, name):
+def brute_force_task(ss_features, ss_labels, name, n_jobs=4):
     current_parameters = RFParams(name)
 
     model = create_model(ss_features, ss_labels, current_parameters,
-                verbose=2, n_jobs=4)
+                verbose=2, n_jobs=n_jobs)
 
     # model.fit(ss_features.T, ss_labels)
 
@@ -249,6 +249,7 @@ def brute_force_git_check_in(update, progress_file, computer):
         progress_frame['mode'][update['name']] = update['mode']
         # progress_frame['mode'][update['name']] = update['mode']
         progress_frame['status'][update['name']] = 'complete'
+        progress_frame['r^2'][update['name']] = update['r^2']
 
     try:
         # print(progress_frame)
@@ -301,6 +302,10 @@ def evaluate_model(model, full_inputs, original_results):
     ev['abs diff mean'] = np.abs(diff).mean()
     ev['mode'] = ''
     ev['median'] = np.nanmedian(diff)
+
+    # r2 = model.score(full_inputs.T, model_predict)
+    # print('r2', r2)
+    # ev['r^2'] = r2 #model.score(full_inputs.T, model_predict)
      
     return ev
 
@@ -344,7 +349,7 @@ def setup_brute_force(feature_file, label_file):
 
 
 
-def run_brute_force(computer, progress_file, ss_data_sets):
+def run_brute_force(computer, progress_file, ss_data_sets, n_jobs=4):
     update = None
     while True:
         print ('\n\n')
@@ -362,7 +367,7 @@ def run_brute_force(computer, progress_file, ss_data_sets):
         model = brute_force_task(
             ss_data_sets[tpd]['features'], 
             ss_data_sets[tpd]['labels'], 
-            _next
+            _next, n_jobs
         )
         total = datetime.now() - start
 
@@ -372,10 +377,12 @@ def run_brute_force(computer, progress_file, ss_data_sets):
             ss_data_sets['full']['features'], 
             ss_data_sets['full']['labels']
         )
+        update['r^2'] = model.score (ss_data_sets['full']['features'].T, ss_data_sets['full']['labels'])
         update['computer'] = computer
         update['train time'] = str(total)
         update['name'] = _next
-        del(model)
+#        return model, update
+        del (model)
         ## update is at top
  
 
