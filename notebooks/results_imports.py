@@ -13,11 +13,12 @@ import numpy as np
 
 from datetime import datetime, timedelta
 
-from multigrids import TemporalMultiGrid, TemporalGrid
+
 import random_forest_tools as tools
 reload(tools)
 import matplotlib.pyplot as plt
 
+from multigrids import TemporalMultiGrid, TemporalGrid
 data_dir = "/Users/rwspicer/Desktop/data/V1/"
 feature_file = os.path.join(
     data_dir,
