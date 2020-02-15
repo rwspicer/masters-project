@@ -86,7 +86,13 @@ def calc_and_store  (
     tdd, fdd  = calc_degree_days(day_array, temp_array, expected_roots)
     lock.acquire()
     tdd_grid[:,index] = tdd
-    fdd_grid[:,index] = [fdd[0]] + fdd ## add frist value equal to second value
+
+    ## FDD array is not long enough (len(tdd) - 1) on its own, so we use the 
+    # first winter value twice this works because the the spline curves are
+    # created will always have a first root going from positive to negative
+    # This works for northern alaska and should not be assumed else where.
+    ##
+    fdd_grid[:,index] = [fdd[0]] + fdd
     lock.release()
 
 
