@@ -8,7 +8,8 @@ import numpy as np
 
 from atm.images import raster
 from atm.tools import calc_degree_days, initiation_areas
-from multigrids import TemporalGrid
+from multigrids import TemporalGrid, TemporalMultiGrid
+
 
 
 # Setup directories ------------------------------------------------------------
@@ -144,8 +145,8 @@ def set_up_mgs ():
 
     sp_monthly_temp_mg.config['grid_name_map'] = grid_name_map
 
-    sp_monthly_temp_mg.show_figure('1920-01',figure_args={'mask':sp_monthly_temp_mg.config['mask']})
-    plt.show()
+    # sp_monthly_temp_mg.show_figure('1920-01',figure_args={'mask':sp_monthly_temp_mg.config['mask']})
+    # plt.show()
 
 
     sp_monthly_temp_mg.save(
@@ -279,14 +280,21 @@ for items in degree_day_info:
     for idx, yr in  enumerate(range(1901,1901+n_years)):
         dd_mg[yr][:] = dd_mm[idx][:]
 
-    
+    ## correct off by one years in fdd data
+    if items[0] == 'fdd':
+        dd_mg.grids[:-1] = dd_mg.grids[1:]
 
+    # print (
+    #     items[0], 
+    #     np.allclose(dd_mg[1901], dd_mg[1902], equal_nan=True), 
+    #     np.allclose(dd_mg[2014], dd_mg[2015], equal_nan=True) 
+    # )
     dd_mg.save(
         os.path.join(items[3], 'SP-'+items[0].upper()+'.yml'
         )
     )
-    dd_mg.show_figure(1950)
-    dd_mg.show_figure(2015)
+    # dd_mg.show_figure(1950)
+    # dd_mg.show_figure(2015)
 
 
 # ------------------------------------------------------------------------------
@@ -323,4 +331,210 @@ for item in info:
 ## Group as Temporal Multigrid -------------------------------------------------
 
 
+
+#   aspect: 10
+#   elev: 12
+#   ewp: 3
+#   fdd: 0
+#   fwp: 4
+#   lat: 8
+#   long: 9
+#   lsp: 6
+#   slope: 11
+#   sp: 5
+#   sp+1: 7
+#   tdd: 1
+#   tdd+1: 2
+
+rows, cols = ex_raster.shape
+n_years = len(sp_monthly_temp_files) // 12 ## get years
+list_grids = [
+    'fdd', 'tdd', 'tdd+1', 
+    'ewp', 'fwp', 'sp', 'lsp', 'sp+1',
+    'lat', 'long', 'aspect', 'slope', 'elev',
+]
+# mask = ex_raster > -9999
+
+
+SP_training_mg = TemporalMultiGrid(
+    rows, cols, len(list_grids), n_years,
+    dataset_name = "SP Training Data Base",
+    grid_names = list_grids,
+)
+
+SP_training_mg.config['start_timestep'] = 1901 
+SP_training_mg.config['description'] = """
+    Seward Peninsula Training Data with base features used in intital tests
+"""
+
+tdd_dir = os.path.join(
+    local_data,'degree-day', 'thawing', 'SP', 'v1', 'multigrid'
+)
+
+fdd_dir = os.path.join(
+    local_data,'degree-day', 'freezing', 'SP', 'v1', 'multigrid'
+)
+
+time_periods = [
+    ([10,11], 'Early Winter', 'ewp'),
+    ([10,11,12,13,14,15], 'Full Winter', 'fwp'),
+    ([4,5,6,7,8,9], 'Summer', 'sp'),
+    ([8,9], 'Late Summer', 'lsp'),
+]
+
+base = os.path.join(local_data,'precipitation')
+set_descriptor = os.path.join('SP','v1','multigrid')
+precip_paths = {
+    tp[2]: os.path.join( 
+        base, 
+        tp[1].lower().replace(' ','-'), 
+        set_descriptor,
+        'SP-'+tp[2].upper()+'-precip-mm.yml'
+    ) for tp in time_periods
+}
+
+
+info = [
+    ('fdd', 'fdd',   fdd_dir, 0 ),
+    ('tdd', 'tdd',    tdd_dir, 0 ), 
+    ('tdd+1','tdd', tdd_dir, 1 ),
+    ('sp','sp', precip_paths['sp'], 0),
+    ('lsp', 'lsp', precip_paths['lsp'],0),
+    ('ewp','ewp', precip_paths['ewp'],0),
+    ('fwp','fwp', precip_paths['fwp'],0),
+    ('sp+1','sp', precip_paths['sp'],1),
+]
+for item in info:
+    # print (item)
+    try:
+        item_data = TemporalGrid(
+            os.path.join(item[2], 'SP-'+item[1].upper()+'.yml')
+        )
+    except:
+        item_data = TemporalGrid(item[2])
+
+    if item[3] == 0:
+        try:
+            SP_training_mg[item[0]][:] = item_data.grids[:].reshape(
+                (n_years,rows, cols)
+            )
+        except ValueError:
+            SP_training_mg[item[0]][:-1] = item_data.grids[:].reshape(
+                (n_years-1,rows, cols)
+            )
+    else: #item[3] == 1
+        SP_training_mg[item[0]][:-1] = item_data.grids[1:].reshape(
+            (n_years - 1,rows, cols)
+        )
+
+
+info = [
+    ('slope', 'slope', 'SP-SLOPE1000m.tif'),
+    ('elev','elevation',  'SP-DEM1000m.tif'),
+    ('aspect','aspect', 'SP-ASPECT1000m.tif'),
+    ('lat','geolocation', 'SP-geolocation_lat.tif'),
+    ('long','geolocation', 'SP-geolocation_long.tif')
+]
+
+for item in info:
+    load_path = os.path.join(local_data,'geolocation',item[1],'SP','v1',item[2])
+    data, md = raster.load_raster(load_path)
+
+    for year in range(1901, 1901+n_years):
+
+        SP_training_mg[item[0], year][:] = data[:]
+
+    
+
+SP_training_mg.save(os.path.join(
+    local_data, 
+    'master-project', 'training', 'SP', 'v1', 'baseline', 'multigrid',
+    'SP-rf-training-set.yml'
+))
+
+SPTD = SP_training_mg
+print ('verification report')
+print ('fdd: 2014 == 2015', np.allclose(SPTD['fdd', 2014], SPTD['fdd', 2015],
+    equal_nan=True))
+print ('fdd: 1901 != 1902', not np.allclose(SPTD['fdd', 1901], 
+    SPTD['fdd', 1902], equal_nan=True))
+print ('tdd[n+1] == tdd+1[n]', np.allclose(SPTD['tdd', 1951], 
+    SPTD['tdd+1', 1950], equal_nan=True))
+print ('sp[n+1] == sp+1[n]', np.allclose(SPTD['sp', 1951], SPTD['sp+1', 1950],
+     equal_nan=True))
 # ------------------------------------------------------------------------------
+
+
+## SP om run -------------------------------------------------------------------
+
+fdd = TemporalGrid(os.path.join(local_data, 'degree-day/freezing/SP/v1/multigrid/SP-FDD.yml'))
+fdd.config['ts_offset'] = 0
+
+tdd = TemporalGrid(os.path.join(local_data, 'degree-day/thawing/SP/v1/multigrid/SP-TDD.yml'))
+tdd.config['ts_offset'] = 0
+
+
+ewp = TemporalGrid(
+    os.path.join(local_data, 'precipitation/early-winter/SP/v1/multigrid/SP-EWP-precip-mm.yml')
+)
+ewp.config['ts_offset'] = 0
+
+fwp = TemporalGrid(
+    os.path.join(local_data, 'precipitation/full-winter/SP/v1/multigrid/SP-FWP-precip-mm.yml')
+)
+fwp.config['ts_offset'] = 0
+
+
+tdd_p1 = tdd.clone()
+tdd_p1.grids[:-1] = tdd.grids[1:] # tdd_p1[0] <- tdd[1], tdd_p1[1] <- tdd[2], and so on
+tdd_p1.config['ts_offset'] = 1
+
+
+grid_dict = {
+    "tdd": tdd,
+    "ewp": ewp,
+    "fwp": fwp,
+    "fdd": fdd,
+    "tdd+1": tdd_p1
+}
+
+bounds = [1901,1950]
+
+ia_grid, stats_grid = initiation_areas.find_initiation_areas_vpdm(grid_dict, bounds)
+
+ia_grid.config['dataset_version'] = '1.0.0'
+ia_grid.config['dataset_name'] = 'SP 5 var Thermokarst Initiation areas'
+ia_grid.config['description'] = """Seward Peninsula 5 var TKI areas version 4. 
+    Calculated from tdd(v1), ewp(v1), fwp(v1), fdd(v1), tdd+1 (tdd v1 offset by 1 year).
+"""
+
+# need to clip out seward first
+# tkpd, md = raster.load_raster(
+#     os.path.join(local_data,'thermokarst/predisposition-model/SP/v1/SP-tk-predisp-model.tif')
+# )
+# tkpd[ tkpd < -5] = np.nan
+
+
+# apply_tkpd = lambda tki: tki * ( tkpd.flatten() / 100)
+# ia_grid_with_predisp = ia_grid.apply_function(apply_tkpd)
+
+# ia_grid_with_predisp.config['dataset_version'] = '1.0.0'
+# ia_grid_with_predisp.config['dataset_name'] = 'SP 5 var TKI  areas'
+# ia_grid_with_predisp.config['description'] = """Seward Peninsula 5 var TKI areas version 4. 
+#     Calculated from tdd(v1), ewp(v1), fwp(v1), fdd(v1), tdd+1 (tdd v1 offset by 1 year).
+#     With predisposition model applied
+# """
+
+ia_grid.config['raster_metadata'] = tdd.config['raster_metadata']
+# ia_grid_with_predisp.config['raster_metadata']= tdd.config['raster_metadata']
+stats_grid.config['raster_metadata']= tdd.config['raster_metadata']
+
+stats_grid.config['dataset-name'] = "SP-IA-Stats"
+
+ia_grid.save(
+    '/Users/rwspicer/Desktop/data/V1/thermokarst/initiation-regions/SP/v1/PDM-5var/without_predisp/multigrid/SP-TKI-PDM5.yml'
+)
+# ia_grid_with_predisp.save('/Users/rwspicer/Desktop/data/V1/thermokarst/initiation-regions/SP/v1/PDM-5var/with_predisp/multigrid/SP-TKI-PDM5-with-predisp.yml')
+
+stats_grid.save('/Users/rwspicer/Desktop/data/V1/thermokarst/initiation-regions/SP/v1/PDM-stats/multigrid/SP-TKI-stats.yml')
+
