@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath('../forestpy/forestpy'))
 from datetime import datetime
 import os
 import joblib
