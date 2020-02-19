@@ -22,7 +22,7 @@ items = [
         'features_file': os.path.join( 
             feature_root,'with-labels/multigrid/with-labels.yml' 
         ),
-        'label_file': label_file 
+        'label_file': label_file ,
         'precent':75
 
     },
@@ -31,7 +31,7 @@ items = [
         'features_file': os.path.join( 
             feature_root,'with-labels/multigrid/with-labels.yml' 
         ),
-        'label_file': label_file 
+        'label_file': label_file ,
         'precent':75
 
     },
@@ -40,7 +40,7 @@ items = [
         'features_file': os.path.join( 
             feature_root,'with-random/multigrid/with-random.yml' 
         ),
-        'label_file': label_file 
+        'label_file': label_file ,
         'precent':75
 
     },
@@ -49,7 +49,7 @@ items = [
         'features_file': os.path.join( 
             feature_root,'no-geolocation/multigrid/no-geolocation.yml' 
         ),
-        'label_file': label_file 
+        'label_file': label_file ,
         'precent':75
 
     },
@@ -58,7 +58,7 @@ items = [
         'features_file': os.path.join( 
             feature_root,'without-elevation/multigrid/without-elevation.yml' 
         ),
-        'label_file': label_file 
+        'label_file': label_file ,
         'precent':75
 
     },
