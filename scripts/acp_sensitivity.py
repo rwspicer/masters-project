@@ -5,6 +5,10 @@ from datetime import datetime
 import os
 import joblib
 
+
+import numpy as np
+from multigrids import TemporalMultiGrid, TemporalGrid
+
 data_path = '/home/rwspicer/data/V1'
 
 feature_root = os.path.join(data_path, 'master-project/training/ACP/v2/')
