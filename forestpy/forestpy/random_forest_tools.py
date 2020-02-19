@@ -100,7 +100,8 @@ def apply_model_to_year(model, test_data, year, mask):
         test_f.append(list(f[mask]))
     test_f = np.array(test_f)
     test_r = model.predict(test_f.T)
-    test_map = np.zeros([415,1096]) - np.nan
+
+    test_map = np.zeros(test_data.config['grid_shape']) - np.nan
     test_map[mask]= test_r
     return test_map
 
