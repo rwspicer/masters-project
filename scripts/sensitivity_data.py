@@ -1,6 +1,7 @@
 import os
 import numpy as np
 from multigrids import TemporalMultiGrid, TemporalGrid
+import copy
 
 def add_empty_grids(self, new_grids):
     rows = self.config['grid_shape'][0]
@@ -49,9 +50,11 @@ def save_data (name, mg, save_dir):
 def generate(base_features, tweaks, save_dir ):
 
     for tweak in tweaks :
-        subset_grids = list(base_features.config['grid_name_map'].keys())
+        print(tweak['name'])
+        subset_grids = copy.deepcopy(list(base_features.config['grid_name_map'].keys()))
         
         for g in tweak['remove']:
+            print(g)
             subset_grids.remove(g)
 
         new_mg = base_features.create_subset(subset_grids)
