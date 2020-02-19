@@ -80,7 +80,7 @@ def build_tweaks(data_dir, label_file, shape = 'real_shape'):
         },
         {
             "name": "without elevation",
-            "remove": ['aspect','slope', 'elevation'],
+            "remove": ['aspect','slope', 'elev'],
             "add": {}
         },
         {
