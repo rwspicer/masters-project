@@ -103,7 +103,7 @@ def go(items=items):
             labels, 
             hyperparameters, 
             2, #verbosity
-            4  #n_jobs
+            12  #n_jobs
         )
         total_train = datetime.now() - start
 
