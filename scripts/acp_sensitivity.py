@@ -22,48 +22,48 @@ label_file = os.path.join(
 
 items = [
     {
-        'name': 'rfm_e4_md2_mfAUTO_tdp25.yml',
+        'name': 'rfm_e4_md2_mfAUTO_tdp05.yml',
         'features_file': os.path.join( 
             feature_root,'with-labels/multigrid/with-labels.yml' 
         ),
         'label_file': label_file ,
-        'percent':75
+        'percent':.05
 
     },
     {
-        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75.yml',
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
         'features_file': os.path.join( 
             feature_root,'with-labels/multigrid/with-labels.yml' 
         ),
         'label_file': label_file ,
-        'percent':75
+        'percent':.75
 
     },
     {
-        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75.yml',
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
         'features_file': os.path.join( 
             feature_root,'with-random/multigrid/with-random.yml' 
         ),
         'label_file': label_file ,
-        'percent':75
+        'percent':.75
 
     },
     {
-        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75.yml',
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
         'features_file': os.path.join( 
             feature_root,'no-geolocation/multigrid/no-geolocation.yml' 
         ),
         'label_file': label_file ,
-        'percent':75
+        'percent':.75
 
     },
     {
-        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75.yml',
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
         'features_file': os.path.join( 
             feature_root,'without-elevation/multigrid/without-elevation.yml' 
         ),
         'label_file': label_file ,
-        'percent':75
+        'percent':.75
 
     },
 ]
@@ -77,33 +77,31 @@ save_path = '../'
 
 def go():
 
-    loaded_data = {}
     grades = {}
-    #this is always the same
-    sam = items[0]
-    f_gird = TemporalMultiGrid(sam['features_file'])
-    l_grid = TemporalGrid(sam['label_file'])
+ 
     for sam in items:
         print(sam['name'])
         hyperparameters = forest.RFParams(sam['name'])
         
-
+        f_grid = TemporalMultiGrid(sam['features_file'])
+        l_grid = TemporalGrid(sam['label_file'])
 
         # if sam['percent'] in loaded_data:
         #     pass
         # else:
         #     print('loading data')
         print ('loading')
-        features, labels, index = forest.setup(f_gird,l_grid, sam['percent'])
+        features, labels, index = forest.setup(f_grid,l_grid, sam['percent'])
             #  = 
-        start = datetime.now()
         print ("running_model")
-        model = create_model(
+        start = datetime.now()
+
+        model = forest.create_model(
             features, 
             labels, 
             hyperparameters, 
-            2, # verbosity
-            4 # n_jobs
+            2, #verbosity
+            4  #n_jobs
         )
         total_train = datetime.now() - start
         
@@ -114,7 +112,7 @@ def go():
 
         diff = labels_predicted - labels_true
 
-        sa_name =  os.path.split(sam['features_file'])[1]
+        sa_name = os.path.split(sam['features_file'])[1]
         score = {
             'train_time': total_train,
             'predict_time': total_predict,
@@ -122,15 +120,12 @@ def go():
             'mean_error' : np.nanmean(diff),
             'median_error' : np.nanmedian(diff),
             'var_error' : np.nanvar(diff),
-
-            
             'mean_abs_error' : np.abs(diff).mean(),
             'median_abs_error' : np.nanmedian(np.abs(diff)),
             'var_abs_error' : np.nanvar(np.abs(diff)),
-            
-            'r2' :  model.score(features.T, labels_true),
+            'r2' :  model.score(test_features.T, labels_true),
         }
-        save_name = sa_name.split('.')[0] +'_'+ sam['name'].split('.')[0]+'.joblib'
+        save_name = sa_name.split('.')[0] + '_' + sam['name'].split('.')[0] + '.joblib'
         grades[save_name] = score
         joblib.dump(model, os.path.join(save_path,save_name))
         print (score)

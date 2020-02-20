@@ -47,6 +47,8 @@ def create_subsample_idx(shape, percent):
     Returns
     -------
     """
+    if percent > 1:
+        percent = 1
     _max = shape[1]
     keep = int(_max * percent)
     idx = np.random.randint(_max, size=keep)
