@@ -9,13 +9,13 @@ import forest
 import numpy as np
 from multigrids import TemporalMultiGrid, TemporalGrid
 
-data_path = '/Volumes/toshi-stati/data/V1/'
+data_path = '/home/rspicer/rf-data'
 
-feature_root = os.path.join(data_path, 'master-project/training/ACP/v2/')
+feature_root = os.path.join(data_path, 'features')
 
 label_file = os.path.join(
     data_path,
-    'thermokarst/initiation-regions/ACP/v4/PDM-5var/without_predisp/multigrid/',
+    'labels',
     'ACP-TKI-PDM5.yml'
 )
 
