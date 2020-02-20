@@ -111,6 +111,12 @@ class RFParams (dict):
                     try:
                         value = int(value)
                     except ValueError:
+                        try:
+                            value = float(value)
+                            self[setting] = value
+                            continue
+                        except ValueError:
+                            pass
                         value = value.lower()
                         if value == 'false':
                             value = False
