@@ -72,7 +72,7 @@ items = [
     
 
 
-save_path = '../'
+save_path = '../../rf-data'
         
 
 def go():
@@ -82,7 +82,7 @@ def go():
     for sam in items:
         print(sam['name'])
         hyperparameters = forest.RFParams(sam['name'])
-        
+
         f_grid = TemporalMultiGrid(sam['features_file'])
         l_grid = TemporalGrid(sam['label_file'])
 
@@ -92,6 +92,7 @@ def go():
         #     print('loading data')
         print ('loading')
         features, labels, index = forest.setup(f_grid,l_grid, sam['percent'])
+        test_features, labels_true = forest.format_data(f_grid, l_grid)
             #  = 
         print ("running_model")
         start = datetime.now()
@@ -104,8 +105,8 @@ def go():
             4  #n_jobs
         )
         total_train = datetime.now() - start
-        
-        test_features, labels_true = forest.format_data(f_grid, l_grid)
+
+
         start = datetime.now()
         labels_predicted = model.predict(test_features.T)
         total_predict = datetime.now() - start
