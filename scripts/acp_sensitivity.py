@@ -19,7 +19,7 @@ from multigrids import TemporalMultiGrid, TemporalGrid
 #     'ACP-TKI-PDM5.yml'
 # )
 
-from harddrive_acp_paths import *
+from ocotal_sp_paths import *
 
 items = [
     {
@@ -96,16 +96,21 @@ def go(items=items):
         test_features, labels_true = forest.format_data(f_grid, l_grid)
             #  = 
         print ("running_model")
-        start = datetime.now()
+        
 
-        model = forest.create_model(
-            features, 
-            labels, 
-            hyperparameters, 
-            2, #verbosity
-            12  #n_jobs
-        )
-        total_train = datetime.now() - start
+        try:
+            start = datetime.now()
+            model = forest.create_model(
+                features, 
+                labels, 
+                hyperparameters, 
+                2, #verbosity
+                12  #n_jobs
+            )
+            total_train = datetime.now() - start
+        except:
+            grades[save_name] = "this caused an error"
+            continue
 
 
         start = datetime.now()

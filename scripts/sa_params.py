@@ -16,8 +16,7 @@ import forest
 
 # baseline_file = 'baseline/multigrid/ACP-training-base.yml' 
 
-# from harddrive_acp_paths import *
-# from ocotal_acp_paths import *
+#from harddrive_acp_paths import *
 
 from ocotal_sp_paths import *
 
@@ -49,7 +48,7 @@ delta_md = [
         ),
         'label_file': label_file ,
         'percent':.75
-    } for n in  range(17)
+    } for n in  range(1,17)
 
 ] 
 

@@ -1,6 +1,6 @@
 import os
 
-data_path = '/home/rspicer/rf-data-sp'
+data_path = '/home/ross/rf-data-sp'
 
 feature_root = os.path.join(data_path, 'features')
 
@@ -11,6 +11,6 @@ label_file = os.path.join(
 )
 
 
-baseline_file = 'baseline/SP-training-base.yml' 
+baseline_file = 'baseline/SP-rf-training-set.yml'
 
 save_path = '../../rf-data-sp'
