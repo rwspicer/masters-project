@@ -16,8 +16,8 @@ import forest
 
 # baseline_file = 'baseline/multigrid/ACP-training-base.yml' 
 
-from harddrive_acp_paths import *
-# from ocotal_acp_paths import *
+#from harddrive_acp_paths import *
+from ocotal_sp_paths import *
 
 all_vars = []
 
