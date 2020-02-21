@@ -132,7 +132,7 @@ def go(items=items):
             'var_abs_error' : np.nanvar(np.abs(diff)),
             'r2' :  model.score(test_features.T, labels_true),
         }
-        save_name = sa_name.split('.')[0] + '_' + sam['name'].split('.')[0] + '.joblib'
+        save_name = sa_name.split('.')[0] + '_' + sam['name'].replace('.yml','.joblib')
         grades[save_name] = score
         joblib.dump(model, os.path.join(save_path,save_name))
         print (score)
