@@ -19,7 +19,7 @@ from multigrids import TemporalMultiGrid, TemporalGrid
 #     'ACP-TKI-PDM5.yml'
 # )
 
-from ocotal_sp_paths import *
+from ocotal_acp_paths import *
 
 items = [
     {
