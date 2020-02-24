@@ -96,6 +96,26 @@ def build_tweaks(data_dir, label_file, shape = 'real_shape'):
             "remove": [],
             "add": {"random": np.random.random(labels.config[shape])}
         },
+        {
+            "name": "without partial precip",
+            "remove": ['ewp', 'lsp'],
+            "add": {}
+        },
+        {
+            "name": "no lt 10", # remove all were round(fi) < 10
+            "remove": ['aspect','slope', 'elev', 'lat', 'long','tdd', 'tdd+1'],
+            "add": {}
+        },
+        {
+            "name": "no max", # removes top3
+            "remove": ['ewp','sp+1','sp'],
+            "add": {}
+        },
+        {
+            "name": "no max no geo", # removes top3
+            "remove": ['ewp','sp+1','sp', 'lat', 'long'],
+            "add": {}
+        },
     ]
     return tweaks
 
