@@ -70,6 +70,45 @@ items = [
     },
 ]
 
+items2 = [
+    {
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
+        'features_file': os.path.join( 
+            feature_root,
+            'without-partial-precip/multigrid/without-partial-precip.yml' 
+        ),
+        'label_file': label_file ,
+        'percent':.75
+
+    },
+    {
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
+        'features_file': os.path.join( 
+            feature_root,'no-lt-10/multigrid/no-lt-10.yml' 
+        ),
+        'label_file': label_file ,
+        'percent':.75
+
+    },
+    {
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
+        'features_file': os.path.join( 
+            feature_root,'no-max/multigrid/no-max.yml' 
+        ),
+        'label_file': label_file ,
+        'percent':.75
+
+    },
+    {
+        'name': 'rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp.75.yml',
+        'features_file': os.path.join( 
+            feature_root,'no-max-no-geo/multigrid/no-max-no-geo.yml' 
+        ),
+        'label_file': label_file ,
+        'percent':.75
+
+    },
+]
 
     
 
