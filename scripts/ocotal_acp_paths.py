@@ -1,6 +1,6 @@
 import os
 
-data_path = '/home/rspicer/rf-data'
+data_path = '/home/ross/rf-data'
 
 feature_root = os.path.join(data_path, 'features')
 
