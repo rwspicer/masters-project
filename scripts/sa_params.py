@@ -18,7 +18,7 @@ import forest
 
 #from harddrive_acp_paths import *
 
-from ocotal_sp_paths import *
+from ocotal_acp_paths import *
 
 all_vars = []
 
@@ -86,7 +86,7 @@ all_vars += delta_mf
 delta_mln = [
 
     {
-        'name': 'rfm_e50_md100_mfAUTO_mln'+ str(n) + '_msl8_mss5_tdp75.yml',
+        'name': 'rfm_e50_md100_mfAUTO_mln'+ str(int(n)) + '_msl8_mss5_tdp75.yml',
         'features_file': os.path.join( 
             feature_root,baseline_file
         ),

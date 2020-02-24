@@ -8,6 +8,7 @@ import forest
 
 import numpy as np
 from multigrids import TemporalMultiGrid, TemporalGrid
+import gc
 
 # data_path = '/Volumes/toshi-stati/data/V1/'
 
@@ -19,7 +20,7 @@ from multigrids import TemporalMultiGrid, TemporalGrid
 #     'ACP-TKI-PDM5.yml'
 # )
 
-from ocotal_sp_paths import *
+from ocotal_acp_paths import *
 
 items = [
     {
@@ -92,11 +93,15 @@ def go(items=items):
         # else:
         #     print('loading data')
         print ('loading')
+        [gc.collect(i)  for i in range(3)]
         features, labels, index = forest.setup(f_grid,l_grid, sam['percent'])
         test_features, labels_true = forest.format_data(f_grid, l_grid)
             #  = 
         print ("running_model")
+
+        sa_name = os.path.split(sam['features_file'])[1]
         
+        save_name = sa_name.split('.')[0] + '_' + sam['name'].replace('.yml','.joblib')
 
         try:
             start = datetime.now()
@@ -136,5 +141,11 @@ def go(items=items):
         grades[save_name] = score
         joblib.dump(model, os.path.join(save_path,save_name))
         print (score)
+        del(features)
+        del( labels)
+        del(index) 
+        del(test_features)
+        del(labels_true)
+
 
     return grades
