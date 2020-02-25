@@ -48,7 +48,7 @@ delta_md = [
         ),
         'label_file': label_file ,
         'percent':.75
-    } for n in  range(1,20)
+    } for n in  list(range(1,20) ) + [20,30,40,50,60,70,80,90]
 
 ] 
 
