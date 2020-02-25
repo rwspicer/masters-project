@@ -18,7 +18,7 @@ import forest
 
 #from harddrive_acp_paths import *
 
-from ocotal_acp_paths import *
+from ocotal_sp_paths import *
 
 all_vars = []
 

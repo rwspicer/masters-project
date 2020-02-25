@@ -20,7 +20,7 @@ import gc
 #     'ACP-TKI-PDM5.yml'
 # )
 
-from ocotal_acp_paths import *
+from ocotal_sp_paths import *
 
 items = [
     {
