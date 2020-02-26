@@ -1,0 +1,2 @@
+,features,mean_abs_error,mean_error,median_abs_error,median_error,predict_time,r2,train_time,var_abs_error,var_error
+SP-rf-training-set_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75.joblib,SP-rf-training-set.yml,0.3597654098992673,-0.002667173006368663,0.21277142253970016,0.004951416464233915,0:00:05.634227,0.997348083952785,0:09:43.433893,0.5645116746143154,0.6939357109624573
