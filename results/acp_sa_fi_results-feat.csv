@@ -1,0 +1,10 @@
+,name,training data,sp,lsp,ewp,fwp,sp+1,tdd,fdd,tdd+1,lat,long,elev,slope,aspect,labels,random
+no-lt-10_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75,baseline,no-lt-10,18.228,16.23,16,14.617,20.875,,14.05,,,,,,,,
+with-labels_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp,baseline-with-labels,with-labels,0,0,0,0,0,0,0,0,0,0,0,0,0,100,
+no-max_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75,baseline,no-max,,19.147,,15.071,,14.136,14.066,14.602,9.511,13.321,0.005,0.137,0.002,,
+no-geolocation_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp,baseline-no-geolocation,no-geolocation,14.161,12.607,14.19,10.891,15.339,10.228,12.105,9.423,,,0.013,1.042,0.001,,
+without-elevation_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp,baseline-tdp,without-elevation,12.594,9.945,11.731,9.729,13.441,8.417,9.555,8.081,7.203,9.303,,,,,
+without-partial-precip_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75,baseline,without-partial-precip,16.771,,,11.873,16.451,10.759,12.254,12.36,7.853,11.603,0.003,0.073,0.001,,
+with-random_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp,baseline-with-random,with-random,12.804,9.923,11.716,9.457,13.191,8.349,9.692,8.33,7.324,9.19,0.001,0.021,0,,0
+no-max-no-geo_rfm_e50_md100_mfAUTO_mln50000_msl8_mss5_tdp75,baseline,no-max-no-geo,,21.375,,18.364,,19.447,18.206,20.132,,,0.17,2.285,0.021,,
+with-labels_rfm_e4_md2_mfAUTO_tdp05,baseline-e4,with-labels,0,0,0,0,0,0,0,0,0,0,0,0,0,100,

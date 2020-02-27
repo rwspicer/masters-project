@@ -22,7 +22,7 @@ from multigrids import TemporalMultiGrid, TemporalGrid
 data_dir = "/Users/rwspicer/Desktop/data/V1/"
 feature_file = os.path.join(
     data_dir,
-    "master-project/training/ACP/v1/temporal-multigrid/rf_traing_set_v1.yml"
+    "master-project/training/ACP/v2/baseline/multigrid/ACP-training-base.yml"
 )
 label_file = os.path.join(
     data_dir,
