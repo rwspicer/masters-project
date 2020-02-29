@@ -1,0 +1,34 @@
+digraph Tree {
+node [shape=box, style="rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+rankdir=LR ;
+0 [label="tdd <= 1239.1\nmse = 261.9\nsamples = 100.0%\nvalue = 4.3"] ;
+1 [label="fdd <= -3381.7\nmse = 241.4\nsamples = 81.9%\nvalue = 2.8"] ;
+0 -> 1 [labeldistance=2.5, labelangle=-45, headlabel="True"] ;
+3 [label="lsp <= 97.9\nmse = 234.3\nsamples = 11.2%\nvalue = -3.6"] ;
+1 -> 3 ;
+11 [label="mse = 164.6\nsamples = 3.3%\nvalue = -7.8"] ;
+3 -> 11 ;
+12 [label="mse = 252.9\nsamples = 7.9%\nvalue = -1.9"] ;
+3 -> 12 ;
+4 [label="tdd+1 <= 1095.2\nmse = 235.1\nsamples = 70.7%\nvalue = 3.8"] ;
+1 -> 4 ;
+7 [label="mse = 231.6\nsamples = 47.1%\nvalue = 2.7"] ;
+4 -> 7 ;
+8 [label="mse = 233.7\nsamples = 23.6%\nvalue = 6.2"] ;
+4 -> 8 ;
+2 [label="tdd <= 1503.7\nmse = 301.8\nsamples = 18.1%\nvalue = 10.9"] ;
+0 -> 2 [labeldistance=2.5, labelangle=45, headlabel="False"] ;
+5 [label="lat <= 1777649.5\nmse = 292.3\nsamples = 16.7%\nvalue = 9.7"] ;
+2 -> 5 ;
+9 [label="mse = 266.6\nsamples = 13.8%\nvalue = 8.2"] ;
+5 -> 9 ;
+10 [label="mse = 351.6\nsamples = 2.9%\nvalue = 17.0"] ;
+5 -> 10 ;
+6 [label="lsp <= 187.8\nmse = 214.8\nsamples = 1.4%\nvalue = 24.6"] ;
+2 -> 6 ;
+13 [label="mse = 198.6\nsamples = 0.8%\nvalue = 29.8"] ;
+6 -> 13 ;
+14 [label="mse = 142.2\nsamples = 0.6%\nvalue = 17.1"] ;
+6 -> 14 ;
+}
